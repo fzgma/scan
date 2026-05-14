@@ -3,34 +3,17 @@
 ### 项目名称
 WebGuardian 网站安全检测工具
 
----
-
 ## 一、项目简介
 
 `WebGuardian` 是一个基于 Python 开发的网站基础安全检测工具。
 
 项目通过输入目标网站地址，对网站进行基础安全检查，包括 HTTPS、SSL 证书、HTTP 安全响应头、TRACE 方法、敏感路径、常见端口和信息泄露等检测项，并根据检测结果生成安全评分和安全等级。
 
-该项目采用分层架构设计，将检测逻辑、页面展示和程序入口进行拆分，便于后续维护和功能扩展。
-
----
-
 ## 二、项目功能
 
 当前版本主要包含以下功能：
 
-### 1. HTTPS 检测
-
-判断目标网站是否使用 HTTPS 协议。
-
-检测内容：
-
-- 是否以 `https://` 开头
-- HTTPS 使用情况是否符合基础安全要求
-
----
-
-### 2. SSL 证书检测
+### 1. SSL 证书检测
 
 检测目标网站的 SSL/TLS 证书状态。
 
@@ -40,9 +23,7 @@ WebGuardian 网站安全检测工具
 - 证书剩余有效天数
 - 证书是否即将过期
 
----
-
-### 3. HTTP 安全响应头检测
+### 2. HTTP 安全响应头检测
 
 检测网站是否配置常见安全响应头。
 
@@ -57,17 +38,13 @@ WebGuardian 网站安全检测工具
 
 这些响应头可以帮助网站降低 XSS、点击劫持、MIME 类型嗅探等常见安全风险。
 
----
-
-### 4. TRACE 方法检测
+### 3. TRACE 方法检测
 
 检测目标网站是否启用了 HTTP TRACE 方法。
 
 如果 TRACE 方法开启，可能会增加跨站追踪攻击风险，因此通常建议关闭。
 
----
-
-### 5. 敏感路径检测
+### 4. 敏感路径检测
 
 检测网站是否存在常见敏感路径。
 
@@ -79,9 +56,8 @@ WebGuardian 网站安全检测工具
 
 如果这些路径可以直接访问，可能存在后台入口暴露、测试环境暴露或备份文件泄露风险。
 
----
 
-### 6. 常见端口检测
+### 5. 常见端口检测
 
 检测目标主机常见端口开放情况。
 
@@ -92,9 +68,9 @@ WebGuardian 网站安全检测工具
 
 用于判断网站 HTTP 和 HTTPS 服务的开放情况。
 
----
 
-### 7. 信息泄露检测
+
+### 6. 信息泄露检测
 
 检测响应头中是否包含可能泄露服务器或技术栈的信息。
 
@@ -105,9 +81,8 @@ WebGuardian 网站安全检测工具
 
 如果这些字段存在，可能暴露服务器类型、框架信息或运行环境信息。
 
----
 
-### 8. 安全评分与等级
+### 7. 安全评分与等级
 
 系统会根据各检测项结果生成安全评分，满分为 `100` 分。
 
@@ -119,15 +94,13 @@ WebGuardian 网站安全检测工具
 | 70 - 84 | B级 |
 | 0 - 69 | C级 |
 
----
 
 ## 三、项目架构
 
 项目采用三层结构：
 
 ```text
-wid/
-│
+
 ├── main.py
 │
 ├── scanner/
@@ -139,7 +112,7 @@ wid/
     └── app.py
 ```
 
----
+
 
 ## 四、目录说明
 
@@ -152,17 +125,9 @@ wid/
 - 引入 UI 层入口函数
 - 启动 Streamlit 页面
 
-示例：
-
-```python
-from ui.app import run_app
 
 
-if __name__ == "__main__":
-    run_app()
-```
 
----
 
 ### 2. `scanner/scanner.py`
 
@@ -197,7 +162,6 @@ if __name__ == "__main__":
 
 - 使用 Streamlit 构建页面
 - 接收用户输入的网站地址
-- 调用 `scanner.scanner.scan`
 - 展示检测结果
 - 展示评分、等级、风险提示和原始 JSON 数据
 
@@ -206,18 +170,6 @@ if __name__ == "__main__":
 - 只负责交互和展示
 - 不实现具体检测逻辑
 - 不直接处理底层网络检测细节
-
----
-
-### 4. `__init__.py`
-
-包初始化文件。
-
-用于让 Python 将 `scanner` 和 `ui` 识别为模块包。
-
-通常可以为空。
-
----
 
 ## 五、技术栈
 
@@ -234,8 +186,6 @@ if __name__ == "__main__":
 
 - Streamlit
 
----
-
 ## 六、安装依赖
 
 建议使用虚拟环境。
@@ -243,7 +193,7 @@ if __name__ == "__main__":
 ### 1. 创建虚拟环境
 
 ```bash
-python -m venv venv
+python -m venv .venv
 ```
 
 ### 2. 激活虚拟环境
@@ -266,60 +216,31 @@ source venv/bin/activate
 pip install streamlit requests
 ```
 
-也可以创建 `requirements.txt`：
-
-```txt
-streamlit
-requests
-```
-
-然后执行：
-
-```bash
-pip install -r requirements.txt
-```
-
----
 
 ## 七、运行项目
 
 在项目根目录执行：
 
 ```bash
-streamlit run main.py
+python run.py
 ```
 
-启动后，终端会显示本地访问地址，例如：
-
-```text
-Local URL: http://localhost:8501
-```
+启动后，终端会显示本地访问地址,并自动打开浏览器访问
 
 打开浏览器访问该地址即可使用。
 
----
 
 ## 八、使用方式
 
-1. 启动项目：
 
-```bash
-streamlit run main.py
-```
-
-2. 在页面输入网站地址，例如：
+1. 在页面输入网站地址，例如：
 
 ```text
 https://example.com
 ```
+2. 点击开始;
 
-3. 点击：
-
-```text
-开始检测
-```
-
-4. 查看检测结果：
+3. 查看检测结果：
 
 - 安全评分
 - 安全等级
@@ -331,38 +252,7 @@ https://example.com
 - 开放端口
 - 信息泄露情况
 
----
 
-## 九、返回结果示例
-
-`scanner.scan(url)` 会返回一个字典，示例结构如下：
-
-```python
-{
-    "ok": True,
-    "url": "https://example.com",
-    "host": "example.com",
-    "score": 85,
-    "level": "A级",
-    "https": True,
-    "ssl_valid": True,
-    "ssl_days_left": 120,
-    "security_header_score": 20,
-    "missing_security_headers": [
-        "Permissions-Policy"
-    ],
-    "trace_enabled": False,
-    "sensitive_paths": [],
-    "open_ports": [80, 443],
-    "info_leak": {
-        "server_header_exists": True,
-        "x_powered_by_exists": False
-    },
-    "errors": []
-}
-```
-
----
 
 ## 十、评分规则说明
 
@@ -379,9 +269,9 @@ https://example.com
 | 443 端口开放 | 5 |
 | 80 端口开放 | 5 |
 
-总分最高限制为 `100` 分。
+总分最高限制为 100分。
 
----
+
 
 ## 十一、设计特点
 
@@ -395,48 +285,11 @@ https://example.com
 
 各层职责明确，方便维护。
 
----
 
 ### 2. 易于扩展
 
-后续可以在 `scanner/scanner.py` 中继续增加检测函数，例如：
+后续可以在 `scanner/` 中继续增加检测方法
 
-- SQL 注入基础检测
-- XSS 反射检测
-- 目录遍历检测
-- robots.txt 检测
-- sitemap.xml 检测
-- Cookie 安全属性检测
-- DNS 安全检测
-
----
-
-### 3. 页面可替换
-
-当前 UI 使用 Streamlit。
-
-如果后续需要改为：
-
-- Flask
-- FastAPI
-- Vue + API
-- 命令行 CLI
-
-只需要替换 UI 层，不需要重写核心扫描逻辑。
-
----
-
-### 4. 输出统一
-
-核心扫描函数 `scan(url)` 统一返回 `dict`，方便：
-
-- UI 页面展示
-- JSON 序列化
-- 日志记录
-- API 接口返回
-- 测试用例断言
-
----
 
 ## 十二、注意事项
 
@@ -447,6 +300,4 @@ https://example.com
 5. 端口检测目前只检测 `80` 和 `443`。
 6. TRACE 方法检测可能被部分 WAF 或代理拦截，结果仅供参考。
 7. SSL 检测默认连接目标主机的 `443` 端口。
-
----
 

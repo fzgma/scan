@@ -34,6 +34,15 @@ def run_app():
         # 调用 scanner 层进行检测
         with st.spinner("正在检测，请稍候..."):
             result = scan(url)
+            # 在按钮点击后
+            progress_bar = st.progress(0, text="准备开始检测")
+
+            def on_progress(percent: int, text: str):
+                progress_bar.progress(percent, text=text)
+
+        with st.spinner("正在检测，请稍候..."):
+            result = scan(url, progress_callback=on_progress)
+
 
         # 如果检测入口校验失败，则直接展示错误信息
         if not result.get("ok"):
